@@ -1,0 +1,11 @@
+i++ 的原子性问题：实际上分为三个步骤 ”读-改-写“
+    int i = 10;
+    i = i++; //10
+过程：
+    int temp = i;
+    i = i + 1;
+    i = temp;
+如何解决？
+    原子变量：jdk1.5之后 java.util.concurrent.atomic 包下提供了常用的原子变量
+        1.volatile 保证内存可见性
+        2.CAS算法保证数据的原子性
