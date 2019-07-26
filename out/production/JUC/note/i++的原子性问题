@@ -7,5 +7,11 @@ i++ 的原子性问题：实际上分为三个步骤 ”读-改-写“
     i = temp;
 如何解决？
     原子变量：jdk1.5之后 java.util.concurrent.atomic 包下提供了常用的原子变量
-        1.volatile 保证内存可见性
-        2.CAS算法保证数据的原子性
+        1.volatile保证内存可见性（变量都用volatile修饰）
+        2.CAS算法（Compare And Swap）保证数据的原子性
+          CAS算法是硬件对并发操作共享数据的支持
+          CAS包含的三个操作数：
+            a.内存值 V
+            b.预估值 A
+            c.更新值 B
+          当且仅当 V == A 时 ，V = B(把B赋给A)，否则不做任何操作

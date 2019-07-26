@@ -1,4 +1,6 @@
-package Atomic_test;
+package atomic;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author: yaobin
@@ -16,7 +18,9 @@ public class AtomicDemo {
 
 class Atomic implements Runnable {
 
-    private int serialNumber = 0;
+    //private int serialNumber = 0;
+    //详见src/note中i++的原子性问题
+    private AtomicInteger serialNumber = new AtomicInteger();
 
     @Override
     public void run() {
@@ -29,10 +33,7 @@ class Atomic implements Runnable {
     }
 
     public int getSerialNumber() {
-        return serialNumber++;
-    }
-
-    public void setSerialNumber(int serialNumber) {
-        this.serialNumber = serialNumber;
+        //return serialNumber++;
+        return serialNumber.getAndIncrement();
     }
 }
