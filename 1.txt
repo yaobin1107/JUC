@@ -1,0 +1,422 @@
+-- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
+--
+-- Host: localhost    Database: ykt
+-- Server version	5.7.16
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ykt_cart`
+--
+
+DROP TABLE IF EXISTS `ykt_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_cart` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `user_id` int(64) NOT NULL COMMENT '用户id',
+  `course_id` int(64) DEFAULT NULL COMMENT '商品id',
+  `quantity` int(32) DEFAULT NULL COMMENT '商品数量',
+  `create_time` datetime DEFAULT CURRENT_-- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
+--
+-- Host: localhost    Database: ykt
+-- Server version	5.7.16
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ykt_cart`
+--
+
+DROP TABLE IF EXISTS `ykt_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_cart` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `user_id` int(64) NOT NULL COMMENT '用户id',
+  `course_id` int(64) DEFAULT NULL COMMENT '商品id',
+  `quantity` int(32) DEFAULT NULL COMMENT '商品数量',
+  `create_time` datetime DEFAULT CURRENT_ail` text COMMENT '商品详情',
+  `activity_price` decimal(10,0) DEFAULT NULL COMMENT '活动价',
+  `price` decimal(20,2) NOT NULL COMMENT '价格,单位-元保留两位小数',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `status` int(1) DEFAULT '1' COMMENT '课程状态，0失效，1正常,2秒杀',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_course`
+--
+
+LOCK TABLES `ykt_course` WRITE;
+/*!40000 ALTER TABLE `ykt_course` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_list`
+--
+
+DROP TABLE IF EXISTS `ykt_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_list` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `course_id` int(64) DEFAULT NULL COMMENT '对应课程',
+  `chapter` int(32) DEFAULT NULL COMMENT '章',
+  `node` int(32) DEFAULT NULL COMMENT '节',
+  `video_link` varchar(256) NOT NULL COMMENT '对应视频链接',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='章节表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_list`
+--
+
+LOCK TABLES `ykt_list` WRITE;
+/*!40000 ALTER TABLE `ykt_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_order`
+--
+
+DROP TABLE IF EXISTS `ykt_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_order` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '订单id',
+  `user_id` int(64) unsigned DEFAULT NULL COMMENT '用户id',
+  `payment` decimal(20,2) DEFAULT NULL COMMENT '实际付款金额,单位是元,保留两位小数',
+  `pay_type` int(4) DEFAULT NULL COMMENT '支付类型,1-在线支付',
+  `status` int(10) DEFAULT NULL COMMENT '订单状态:0待付款，1待发货，2已发货，3交易完成，4交易关闭',
+  `is_assess` int(1) DEFAULT '0' COMMENT '是否评价，0否 1是',
+  `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
+  `send_time` datetime DEFAULT NULL COMMENT '发货时间',
+  `end_time` datetime DEFAULT NULL COMMENT '交易完成时间',
+  `close_time` datetime DEFAULT NULL COMMENT '交易关闭时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  `order_number` int(64) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_order`
+--
+
+LOCK TABLES `ykt_order` WRITE;
+/*!40000 ALTER TABLE `ykt_order` DISABLE KEYS */;
+INSERT INTO `ykt_order` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,NULL,33.30,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `ykt_order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_order_item`
+--
+
+DROP TABLE IF EXISTS `ykt_order_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_order_item` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '订单子表id',
+  `course_id` int(64) DEFAULT NULL COMMENT '商品id',
+  `order_id` int(64) DEFAULT NULL COMMENT '对应订单id',
+  `current_unit_price` decimal(20,2) DEFAULT NULL COMMENT '生成订单时的商品单价，单位是元,保留两位小数',
+  `quantity` int(10) DEFAULT NULL COMMENT '商品数量',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`),
+  KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单项';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_order_item`
+--
+
+LOCK TABLES `ykt_order_item` WRITE;
+/*!40000 ALTER TABLE `ykt_order_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_order_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_pay_info`
+--
+
+DROP TABLE IF EXISTS `ykt_pay_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_pay_info` (
+  `id` int(64) NOT NULL AUTO_INCREMENT,
+  `order_id` int(64) DEFAULT NULL COMMENT '订单号',
+  `pay_platform` int(1) DEFAULT NULL COMMENT '支付平台:1-支付宝,2-微信',
+  `platform_number` varchar(64) DEFAULT NULL COMMENT '支付宝支付流水号',
+  `pay_status` varchar(1) DEFAULT NULL COMMENT '支付宝支付状态',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_pay_info`
+--
+
+LOCK TABLES `ykt_pay_info` WRITE;
+/*!40000 ALTER TABLE `ykt_pay_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_pay_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_receive_info`
+--
+
+DROP TABLE IF EXISTS `ykt_receive_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_receive_info` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `user_id` int(64) NOT NULL COMMENT '用户id',
+  `user_province` varchar(20) DEFAULT NULL COMMENT '省份',
+  `user_city` varchar(20) DEFAULT NULL COMMENT '城市',
+  `user_district` varchar(20) DEFAULT NULL COMMENT '区/县',
+  `user_address` varchar(200) DEFAULT NULL COMMENT '详细地址',
+  `user_zip` varchar(6) DEFAULT NULL COMMENT '邮编',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货人信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_receive_info`
+--
+
+LOCK TABLES `ykt_receive_info` WRITE;
+/*!40000 ALTER TABLE `ykt_receive_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_receive_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_seckill`
+--
+
+DROP TABLE IF EXISTS `ykt_seckill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_seckill` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '商品库存id',
+  `c_name` varchar(50) NOT NULL COMMENT '商品名称',
+  `price` decimal(10,0) DEFAULT NULL COMMENT '价格',
+  `number` int(11) NOT NULL COMMENT '商品库存',
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '秒杀开始时间',
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '秒杀结束时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '秒杀创建时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='秒杀库存表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_seckill`
+--
+
+LOCK TABLES `ykt_seckill` WRITE;
+/*!40000 ALTER TABLE `ykt_seckill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_seckill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_success_killed`
+--
+
+DROP TABLE IF EXISTS `ykt_success_killed`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_success_killed` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '秒杀商品id',
+  `user_id` int(64) NOT NULL COMMENT '用户手机号',
+  `state` tinyint(4) NOT NULL DEFAULT '-1' COMMENT '状态标识:-1:无效 0:成功 1:已付款',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '秒杀成功时间',
+  `order_id` int(64) DEFAULT NULL COMMENT '订单id',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`,`user_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='秒杀成功明细表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_success_killed`
+--
+
+LOCK TABLES `ykt_success_killed` WRITE;
+/*!40000 ALTER TABLE `ykt_success_killed` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_success_killed` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_tag`
+--
+
+DROP TABLE IF EXISTS `ykt_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_tag` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '类别Id',
+  `course_id` int(64) DEFAULT NULL COMMENT '课程id',
+  `parent_id` int(32) DEFAULT NULL COMMENT '父类别id，当id=0时说明是根节点,一级类别',
+  `name` varchar(50) DEFAULT NULL COMMENT '类别名称',
+  `is_hot` int(1) DEFAULT '1' COMMENT '类别状态1-正常,2-很火,3差',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`,`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程标签表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_tag`
+--
+
+LOCK TABLES `ykt_tag` WRITE;
+/*!40000 ALTER TABLE `ykt_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_teacher`
+--
+
+DROP TABLE IF EXISTS `ykt_teacher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_teacher` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `t_name` varchar(32) DEFAULT NULL COMMENT '课程名称',
+  `t_desc` varchar(128) DEFAULT NULL COMMENT '简介',
+  `t_image` varchar(128) DEFAULT NULL COMMENT '课程图片',
+  `cources_id` int(64) DEFAULT NULL COMMENT '对应课程',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `cources_id` (`cources_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='教师表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_teacher`
+--
+
+LOCK TABLES `ykt_teacher` WRITE;
+/*!40000 ALTER TABLE `ykt_teacher` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_teacher` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ykt_user`
+--
+
+DROP TABLE IF EXISTS `ykt_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ykt_user` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '用户表id',
+  `username` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(20) DEFAULT NULL COMMENT '用户密码，MD5加密',
+  `email` varchar(30) DEFAULT NULL COMMENT '邮箱',
+  `phone` varchar(20) DEFAULT NULL COMMENT '电话',
+  `question` varchar(100) DEFAULT NULL COMMENT '找回密码问题',
+  `answer` varchar(100) DEFAULT NULL COMMENT '找回密码答案',
+  `role` int(1) DEFAULT '1' COMMENT '角色0-管理员,1-普通用户,2-会员',
+  `image` varchar(128) DEFAULT NULL COMMENT '头像',
+  `code` varchar(64) DEFAULT NULL COMMENT '激活码',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '最后一次更新时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ykt_user`
+--
+
+LOCK TABLES `ykt_user` WRITE;
+/*!40000 ALTER TABLE `ykt_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ykt_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ytk_assess`
+--
+
+DROP TABLE IF EXISTS `ytk_assess`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ytk_assess` (
+  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `order_id` int(64) DEFAULT NULL COMMENT '订单id',
+  `course_id` int(64) DEFAULT NULL COMMENT '课程id',
+  `desc` varchar(50) DEFAULT NULL COMMENT '评价',
+  `stars` int(1) DEFAULT NULL COMMENT '星级，1-5',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `is_alive` int(1) DEFAULT '1' COMMENT '软删除 0无效，1有效',
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ytk_assess`
+--
+
+LOCK TABLES `ytk_assess` WRITE;
+/*!40000 ALTER TABLE `ytk_assess` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ytk_assess` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-07-24 23:17:07
