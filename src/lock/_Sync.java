@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * jdk1.5以后：显示锁
      * 3.同步 Lock：需要通过lock()方法上锁，unlock()
  */
-public class _Lock {
+public class _Sync {
     public static void main(String[] args) {
         Ticket ticket = new Ticket();
         new Thread(ticket,"窗口1：").start();

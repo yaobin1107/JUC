@@ -1,9 +1,9 @@
 package pc_case;
 
 /**
- * 存在问题的生产者消费者案例
+ * 通过等待唤醒机制解决
  */
-public class ProductAndConsumer_hasProblem {
+public class ProductAndConsumer_Syn {
     public static void main(String[] args) {
         Clerk clerk = new Clerk();
         Producer producer = new Producer(clerk);
@@ -19,20 +19,30 @@ class Clerk {
 
     //进货
     public synchronized void get() {
-        if (product >= 10) {
+        while (product >= 10) {//为了避免虚假唤醒，应该总是使用在循环中
             System.out.println("产品已满！");
-        } else {
-            System.out.println(Thread.currentThread().getName() + ":" + ++product);
+            try {
+                this.wait();//满了等
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        System.out.println(Thread.currentThread().getName() + ":" + ++product);
+        this.notifyAll();
     }
 
     //卖货
     public synchronized void sale() {
-        if (product <= 0) {
+        while (product <= 0) {
             System.out.println("缺货！");
-        } else {
-            System.out.println(Thread.currentThread().getName() + ":" + --product);
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        System.out.println(Thread.currentThread().getName() + ":" + --product);
+        this.notifyAll();
     }
 }
 
